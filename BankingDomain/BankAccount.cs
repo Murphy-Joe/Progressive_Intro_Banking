@@ -6,6 +6,7 @@
         public decimal GetBalance()
         {
             return _balance;
+           
         }
 
         public void Withdraw(decimal amountToWithdraw)
