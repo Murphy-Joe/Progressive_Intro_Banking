@@ -27,19 +27,53 @@ namespace BankingUnitTests
 
         }
 
+        // withdrawing more than I have doesn't change the balance.
         [Fact]
-        public void Demo()
+        public void OverdraftDoesntChangeTheBalance()
         {
-            var account1 = new BankAccount();
-            var account2 = new BankAccount();
-
-            account1.Withdraw(account1.GetBalance()); // What does this do?
-
-            Assert.Equal(0, account1.GetBalance());
-            Assert.Equal(5000M, account2.GetBalance());
+            var account = new BankAccount();
+            var openingBalance = account.GetBalance();
+            try
+            {
+                account.Withdraw(openingBalance + .01M);
+            }
+            catch (CannotOverdraftException)
+            {
+                // ignoring for this test.
+            }
+            finally
+            {
+                Assert.Equal(openingBalance, account.GetBalance());
+            }
 
            
-            
+        }
+
+        [Fact]
+        public void UsersCanWithdrawEntireBalance()
+        {
+            var account = new BankAccount();
+            var openingBalance = account.GetBalance();
+
+            account.Withdraw(openingBalance);
+
+            Assert.Equal(0, account.GetBalance());
+        }
+
+        // throw some kind of exception to let the consumer know it didn't work as expected.
+
+        [Fact]
+        public void OverdraftThrows()
+        {
+            var account = new BankAccount();
+            var openingBalance = account.GetBalance();
+
+
+            Assert.Throws<CannotOverdraftException>(() =>
+            {
+                account.Withdraw(openingBalance + 1);
+            });
+           
         }
     }
 }

@@ -11,11 +11,19 @@
 
         public void Withdraw(decimal amountToWithdraw)
         {
-            _balance -= amountToWithdraw;
+            if (amountToWithdraw > _balance)
+            {
+                throw new CannotOverdraftException();
+            }
+            else
+            {
+                _balance -= amountToWithdraw;
+            }
         }
 
         public void Deposit(decimal amountToDeposit)
         {
+            
             _balance += amountToDeposit;
         }
     }
