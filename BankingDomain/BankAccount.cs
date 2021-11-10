@@ -31,7 +31,7 @@
         public void Deposit(decimal amountToDeposit)
         {
          
-            decimal bonus = _bonusCalculator.GetBonusForDeposit(amountToDeposit, _balance);
+            decimal bonus = _bonusCalculator.GetBonusForDeposit(_balance, amountToDeposit);
 
             _balance += amountToDeposit + bonus;
         }
