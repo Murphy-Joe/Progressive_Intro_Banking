@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BankingUnitTests.TestDoubles
 {
+    // Dummies are test doubles that are there just so you don't get a null reference when running your test.
+    // - They are used when your SUT has a dependency, but that dependency shouldn't have any influence on a
+    //   particular test.
     public class DummyBonusCalculator : ICalculateBonuses
     {
         public decimal GetBonusForDeposit(decimal balance, decimal amountToDeposit)
