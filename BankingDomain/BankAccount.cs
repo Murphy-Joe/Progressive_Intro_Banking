@@ -2,12 +2,15 @@
 {
     public class BankAccount
     {
-        private decimal _balance = 5000M;
-        private ICalculateBonuses _bonusCalculator;
 
-        public BankAccount(ICalculateBonuses bonusCalculator)
+        // Class level variables - "Fields"
+        private  decimal _balance = 5000M;
+        private readonly ICalculateBonuses _bonusCalculator;
+        private readonly INotifyTheFed _fedNotifier;
+        public BankAccount(ICalculateBonuses bonusCalculator, INotifyTheFed fedNotifier)
         {
             _bonusCalculator = bonusCalculator;
+            _fedNotifier = fedNotifier;
         }
 
         public decimal GetBalance()
@@ -24,13 +27,16 @@
             }
             else
             {
+                // Write the Code You Wish You Had
+               _fedNotifier.NotifyOfWithdraw(this, amountToWithdraw);
                 _balance -= amountToWithdraw;
+
             }
         }
 
         public void Deposit(decimal amountToDeposit)
         {
-         
+            // camelCase, PascalCase
             decimal bonus = _bonusCalculator.GetBonusForDeposit(_balance, amountToDeposit);
 
             _balance += amountToDeposit + bonus;

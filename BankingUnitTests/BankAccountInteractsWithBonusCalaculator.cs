@@ -17,7 +17,7 @@ namespace BankingUnitTests
         {
             // Given
             var stubbedBonusCalculator = new Mock<ICalculateBonuses>();
-            var account = new BankAccount(stubbedBonusCalculator.Object);
+            var account = new BankAccount(stubbedBonusCalculator.Object,new Mock<INotifyTheFed>().Object);
             var openingBalance = account.GetBalance();
             var amountToDeposit = 123.23M; // weird made up thing.
             stubbedBonusCalculator.Setup(b => 
